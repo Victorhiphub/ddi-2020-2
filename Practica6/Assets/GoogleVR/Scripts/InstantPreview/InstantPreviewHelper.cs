@@ -56,6 +56,7 @@ public class InstantPreviewHelper : MonoBehaviour
     {
         // Gets android SDK root from preferences.
         var sdkRoot = EditorPrefs.GetString("AndroidSdkRoot");
+        //var sdkRoot = "C://Program Files//Unity/Hub//Editor//2019.2.21f1//Editor//Data//PlaybackEngines//AndroidPlayer//SDK";
         if (string.IsNullOrEmpty(sdkRoot))
         {
             Debug.LogError(CHECK_ANDROID_SDK_PATH);

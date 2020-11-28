@@ -1,3 +1,4 @@
+  
 //-----------------------------------------------------------------------
 // <copyright file="ObjectController.cs" company="Google Inc.">
 // Copyright 2014 Google Inc. All rights reserved.
@@ -35,6 +36,26 @@ namespace GoogleVR.HelloVR
 
         private Vector3 startingPosition;
         private Renderer myRenderer;
+        private Locomotion locomotion;
+        public Interactable interactable;
+        public float triggerInteractionTime = 2f;
+        public float interactionTimer = 0f;
+        private bool timerRunning= false;
+
+        void Update()
+        {
+            if(timerRunning)
+            {
+                interactionTimer += Time.deltaTime;
+                if(interactionTimer > triggerInteractionTime&&CompareTag("Respawn"))
+                {
+                    TeleportPlayer();
+                }
+              
+               
+            }
+            
+        }
 
         /// <summary>Sets this instance's GazedAt state.</summary>
         /// <param name="gazedAt">
@@ -42,6 +63,17 @@ namespace GoogleVR.HelloVR
         /// </param>
         public void SetGazedAt(bool gazedAt)
         {
+           if(gazedAt)
+           {
+               
+               timerRunning=true;
+           }
+           else
+           {
+               timerRunning=false;
+               interactionTimer = 0f;
+           }
+           
             if (inactiveMaterial != null && gazedAtMaterial != null)
             {
                 myRenderer.material = gazedAt ? gazedAtMaterial : inactiveMaterial;
@@ -120,7 +152,15 @@ namespace GoogleVR.HelloVR
         {
             startingPosition = transform.localPosition;
             myRenderer = GetComponent<Renderer>();
+            locomotion = FindObjectOfType<Locomotion>();
             SetGazedAt(false);
+        }
+        public void TeleportPlayer()
+        {
+            if(locomotion!= null)
+            {
+                locomotion.TeleportPlayer(transform.position);
+            }
         }
     }
 }
