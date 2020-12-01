@@ -47,7 +47,7 @@ namespace GoogleVR.HelloVR
             if(timerRunning)
             {
                 interactionTimer += Time.deltaTime;
-                if(interactionTimer > triggerInteractionTime&&CompareTag("Respawn"))
+                if(interactionTimer > triggerInteractionTime)
                 {
                     TeleportPlayer();
                 }
